@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2FA</title>
+</head>
+<body>
+<script src="sha1.js"></script>
+<script src="gauth.js"></script>
+<script>
+    window.onload = function(){
+        Init();
+    }
+</script>
+<style type="text/css">
+    body{
+        font-size:20px;
+        margin : 10px;
+        padding: 10px;
+    }
+    input{
+        font-size:20px;
+        width: 500px;
+    }
+</style>
+<div>
+<label>Secret Key : </label>
+<input id='skey' value=""></input>
+<br>
+
+<label>TOTP Code: </label>
+<label id="totp"></label>
+<button id='btn1'>刷新</button><br>
+
+<label>TOTP TTL : </label>
+<label id="ttl"></label>
+</div>
+</body>
+</html>
