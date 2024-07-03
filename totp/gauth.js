@@ -1,15 +1,10 @@
 // 初始化
 var Init = function() {
-    var skey = $('skey');
-    var totp = $('totp');
-    var ttl  = $('ttl');
-    var btn1  = $('btn1');
-    
     // 倒计时刷新
     function startInterval() {
         setInterval(function () {
           var ttls = Math.floor(Date.now() / 1000 % 30);
-          ttl.innerHTML = 30 - ttls;
+          $('ttl').innerHTML = 30 - ttls;
           if (ttls === 0) {
             refreshCode();
           }
@@ -22,14 +17,28 @@ var Init = function() {
     }
     
     function refreshCode() {
-        var secret = skey.value;
+        var totp = $('totp');
+        var secret = $('skey').value;
         secret = secret.substr(0, secret.length - secret.length % 8);
         totp.innerHTML = generate(secret);
         //console.log('TOTP:', totp.innerHTML);
     }
     
-    btn1 = btn1.addEventListener('click', function(){
+    // 刷新按钮
+    $('btn1').addEventListener('click', function(){
         refreshCode();
+    });
+    // 显示密码
+    $('eye_open').addEventListener('click', function(){
+        if($('skey').type == 'password')
+        {
+            $('skey').type = 'text';
+            setTimeout(function(){$('skey').type = 'password';}, 5000);
+        }
+    });
+    // 隐藏密码
+    $('eye_close').addEventListener('click', function(){
+        $('skey').type = 'password';
     });
     
     sync2NextSecond();
