@@ -26,7 +26,7 @@ var Init = function() {
         $('eye_open').style.display="inline";
         $('eye_close').style.display="none";
         $('skey').type = 'text';
-        setTimeout(function(){eye_open();}, 5000);
+        setTimeout(function(){eye_close();}, 5000);
     }
     
     function eye_close(){
