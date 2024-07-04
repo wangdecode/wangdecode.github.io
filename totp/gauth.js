@@ -22,14 +22,14 @@ var Init = function() {
         $('code').innerHTML = generate(secret);
     }
     
-    function eye_close(){
+    function eye_open(){
         $('eye_open').style.display="inline";
         $('eye_close').style.display="none";
         $('skey').type = 'text';
         setTimeout(function(){eye_open();}, 5000);
     }
     
-    function eye_open(){
+    function eye_close(){
         $('eye_close').style.display="inline";
         $('eye_open').style.display="none";
         $('skey').type = 'password';
@@ -39,9 +39,9 @@ var Init = function() {
         refreshCode();
     });
     // 显示密码
-    $('eye_open').addEventListener('click', eye_close);
+    $('eye_open').addEventListener('click', eye_open);
     // 隐藏密码
-    $('eye_close').addEventListener('click', eye_open);
+    $('eye_close').addEventListener('click', eye_close);
     
     sync2NextSecond();
     refreshCode();
