@@ -17,29 +17,31 @@ var Init = function() {
     }
     
     function refreshCode() {
-        var totp = $('totp');
         var secret = $('skey').value;
         secret = secret.substr(0, secret.length - secret.length % 8);
-        totp.innerHTML = generate(secret);
-        //console.log('TOTP:', totp.innerHTML);
+        $('code').innerHTML = generate(secret);
     }
     
+    function eye_close(){
+        $('eye_close').style.display="inline";
+        $('eye_open').style.display="none";
+        $('skey').type = 'text';
+        setTimeout(function(){eye_open();}, 5000);
+    }
+    
+    function eye_open(){
+        $('eye_open').style.display="inline";
+        $('eye_close').style.display="none";
+        $('skey').type = 'password';
+    }
     // 刷新按钮
     $('btn1').addEventListener('click', function(){
         refreshCode();
     });
     // 显示密码
-    $('eye_open').addEventListener('click', function(){
-        if($('skey').type == 'password')
-        {
-            $('skey').type = 'text';
-            setTimeout(function(){$('skey').type = 'password';}, 5000);
-        }
-    });
+    $('eye_open').addEventListener('click', eye_close);
     // 隐藏密码
-    $('eye_close').addEventListener('click', function(){
-        $('skey').type = 'password';
-    });
+    $('eye_close').addEventListener('click', eye_open);
     
     sync2NextSecond();
     refreshCode();
@@ -52,7 +54,7 @@ var Init = function() {
 var generate = function(secret, epoch) {
     var key = base32tohex(secret);
     
-    // If no time is given, set time as now
+    // 若 epoch 为空则设为当前时间
     if(typeof epoch === 'undefined') {
         epoch = Math.round(new Date().getTime() / 1000.0);
     }
@@ -65,18 +67,18 @@ var generate = function(secret, epoch) {
     hmacObj.update(time);
     var hmac = hmacObj.getHMAC("HEX");
 
-    var offset = hex2dec(hmac.substring(hmac.length - 1));
-    var otp = (hex2dec(hmac.substr(offset * 2, 8)) & hex2dec('7fffffff')) + '';
-    return (otp).substr(otp.length - 6, 6).toString();
+    var offset = hex2dec(hmac.substr(-1));
+    var otp = (hex2dec(hmac.substr(offset * 2, 8)) & hex2dec('7fffffff')).toString();
+    return otp.substr(-6);
 };
 
-var base32tohex = function(base32) {
+var base32tohex = function(str) {
     var base32chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
     var bits = "";
     var hex = "";
 
-    for (var i = 0; i < base32.length; i++) {
-        var val = base32chars.indexOf(base32.charAt(i).toUpperCase());
+    for (var i = 0; i < str.length; i++) {
+        var val = base32chars.indexOf(str.charAt(i).toUpperCase());
         bits += leftpad(val.toString(2), 5, '0');
     }
 
