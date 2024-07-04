@@ -23,15 +23,15 @@ var Init = function() {
     }
     
     function eye_close(){
-        $('eye_close').style.display="inline";
-        $('eye_open').style.display="none";
+        $('eye_open').style.display="inline";
+        $('eye_close').style.display="none";
         $('skey').type = 'text';
         setTimeout(function(){eye_open();}, 5000);
     }
     
     function eye_open(){
-        $('eye_open').style.display="inline";
-        $('eye_close').style.display="none";
+        $('eye_close').style.display="inline";
+        $('eye_open').style.display="none";
         $('skey').type = 'password';
     }
     // 刷新按钮
