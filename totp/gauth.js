@@ -39,9 +39,9 @@ var Init = function() {
         refreshCode();
     });
     // 显示密码
-    $('eye_open').addEventListener('click', eye_open);
+    $('eye_open').addEventListener('click', eye_close);
     // 隐藏密码
-    $('eye_close').addEventListener('click', eye_close);
+    $('eye_close').addEventListener('click', eye_open);
     
     sync2NextSecond();
     refreshCode();
